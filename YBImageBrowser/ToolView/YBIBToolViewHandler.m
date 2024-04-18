@@ -59,6 +59,11 @@
 #pragma mark - private
 
 - (BOOL)currentDataShouldHideSaveButton {
+    if (!self.yb_currentData) {
+        // 检查 yb_currentData() 返回的对象是否为nil
+        // yb_currentData is nil, cannot determine if the save button should be hidden.
+        return YES;
+    }
     id<YBIBDataProtocol> data = self.yb_currentData();
     BOOL allow = [data respondsToSelector:@selector(yb_allowSaveToPhotoAlbum)] && [data yb_allowSaveToPhotoAlbum];
     BOOL can = [data respondsToSelector:@selector(yb_saveToPhotoAlbum)];
